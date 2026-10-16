@@ -1,0 +1,324 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f7f5ee">
+  <title>Escala de Barthel | Actividades básicas de la vida diaria</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #263b36;
+      --muted: #64736e;
+      --paper: #fbfaf6;
+      --line: #e3e7dc;
+      --green: #dcebe2;
+      --coral: #f5ddd2;
+      --yellow: #f3e9bf;
+      --blue: #dce9ef;
+      --lilac: #e9e1ee;
+      --white: #fffefa;
+      --serif: Georgia, 'Times New Roman', serif;
+      --sans: 'Avenir Next', Avenir, 'Segoe UI', sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background-color: var(--paper);
+      background-image: radial-gradient(#d9e3d9 0.7px, transparent 0.7px);
+      background-size: 18px 18px;
+      color: var(--ink);
+      font-family: var(--sans);
+      line-height: 1.55;
+    }
+    button, input { font: inherit; }
+    button { color: inherit; }
+
+    .page { max-width: 1120px; margin: 0 auto; padding: 30px 28px 56px; }
+    .topline { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-bottom: 14px; border-bottom: 1px solid var(--line); }
+    .brand { font-size: .78rem; font-weight: 750; letter-spacing: .06em; text-transform: uppercase; }
+    .topline-note { color: var(--muted); font-size: .82rem; }
+    .intro { display: grid; grid-template-columns: minmax(0, 1fr) 250px; gap: 36px; align-items: end; padding: 38px 0 28px; }
+    .eyebrow { margin: 0 0 8px; color: #56766b; font-size: .75rem; font-weight: 800; letter-spacing: .09em; text-transform: uppercase; }
+    h1 { max-width: 720px; margin: 0; font: 500 clamp(2.5rem, 5vw, 4rem)/1.02 var(--serif); letter-spacing: 0; }
+    .intro-copy { max-width: 700px; margin: 15px 0 0; color: #53655f; font-size: 1rem; }
+    .score-panel { display: grid; grid-template-columns: auto 1fr; align-items: center; gap: 12px; padding: 15px 17px; background: var(--green); border-radius: 7px; }
+    .score-number { min-width: 77px; font: 500 2.6rem/.95 var(--serif); font-variant-numeric: tabular-nums; }
+    .score-number small { font: 600 .86rem var(--sans); }
+    .score-label { font-size: .79rem; font-weight: 750; }
+    .score-status { display: block; margin-top: 3px; color: #4c655c; font-size: .76rem; }
+    .meter { grid-column: 1 / -1; height: 5px; overflow: hidden; background: #ffffffa8; border-radius: 99px; }
+    .meter-fill { width: 0; height: 100%; background: #557c6d; transition: width .25s ease; }
+
+    .about { display: grid; grid-template-columns: 1fr 1fr; gap: 26px; padding: 20px 0 22px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+    .about h2, .section-heading h2 { margin: 0; font: 500 1.42rem var(--serif); }
+    .about p { margin: 6px 0 0; color: var(--muted); font-size: .89rem; }
+    .about strong { color: var(--ink); }
+    .population { padding-left: 22px; border-left: 1px solid var(--line); }
+
+    .section-heading { display: flex; justify-content: space-between; align-items: end; gap: 18px; margin: 30px 0 14px; }
+    .section-heading p { margin: 5px 0 0; color: var(--muted); font-size: .85rem; }
+    .actions { display: flex; gap: 8px; }
+    .action-button { display: inline-flex; align-items: center; gap: 7px; min-height: 40px; padding: 8px 12px; border: 1px solid #d6dfd6; border-radius: 5px; background: var(--white); cursor: pointer; font-size: .8rem; font-weight: 700; }
+    .action-button:hover { background: #edf3ec; }
+    .action-button:focus-visible, input:focus-visible + label { outline: 3px solid #719483; outline-offset: 2px; }
+    .action-button svg { width: 16px; height: 16px; }
+    .activities { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+    .activity { min-width: 0; padding: 16px; border: 1px solid var(--line); border-top: 3px solid var(--accent); border-radius: 6px; background: var(--white); animation: arrive .45s both; animation-delay: calc(var(--order) * 35ms); }
+    @keyframes arrive { from { opacity: 0; transform: translateY(7px); } to { opacity: 1; transform: translateY(0); } }
+    .activity-head { display: grid; grid-template-columns: 48px 1fr auto; gap: 12px; align-items: center; }
+    .illustration { display: grid; width: 48px; height: 48px; place-items: center; border-radius: 50%; background: var(--accent); font-size: 1.65rem; }
+    .activity h3 { margin: 0; font-size: .96rem; line-height: 1.2; }
+    .activity-description { margin: 4px 0 0; color: var(--muted); font-size: .77rem; }
+    .item-points { color: #60756c; font-size: .72rem; font-weight: 750; white-space: nowrap; }
+    .options { display: grid; gap: 5px; margin: 14px 0 0; padding: 0; border: 0; }
+    .option { position: relative; }
+    .option input { position: absolute; width: 1px; height: 1px; opacity: 0; }
+    .option label { display: grid; grid-template-columns: 20px minmax(0, 1fr) auto; gap: 9px; align-items: start; padding: 8px 9px; border: 1px solid transparent; border-radius: 4px; cursor: pointer; }
+    .option label:hover { background: #f5f6f0; }
+    .option input:checked + label { border-color: #abc4b3; background: #edf4ee; }
+    .radio-mark { display: grid; width: 17px; height: 17px; margin-top: 1px; place-items: center; border: 1.5px solid #99a9a0; border-radius: 50%; }
+    .option input:checked + label .radio-mark { border-color: #557c6d; }
+    .option input:checked + label .radio-mark::after { width: 8px; height: 8px; border-radius: 50%; background: #557c6d; content: ''; }
+    .option-text { color: #495a54; font-size: .78rem; line-height: 1.4; }
+    .option-score { padding-left: 4px; color: var(--ink); font-size: .8rem; font-weight: 800; white-space: nowrap; }
+
+    .summary { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; margin-top: 22px; padding: 19px 21px; border-radius: 6px; background: #f0eee4; }
+    .summary h2 { margin: 0 0 5px; font: 500 1.2rem var(--serif); }
+    .summary p { margin: 0; color: #5c6962; font-size: .82rem; }
+    .levels { display: grid; grid-template-columns: repeat(5, 1fr); gap: 5px; margin-top: 11px; }
+    .level { padding: 8px 7px; border-radius: 4px; background: #fffefa; }
+    .level strong, .level span { display: block; }
+    .level strong { font-size: .77rem; }
+    .level span { margin-top: 2px; color: var(--muted); font-size: .69rem; }
+    .level.active { outline: 2px solid #648a78; outline-offset: 1px; }
+    .score-message { margin-top: 8px !important; font-weight: 750; color: var(--ink) !important; }
+    .footnote { margin-top: 20px; padding-top: 12px; border-top: 1px solid var(--line); color: var(--muted); font-size: .75rem; }
+    .profile { display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 12px; margin-top: 22px; }
+    .profile label { display: grid; gap: 5px; color: #53655f; font-size: .74rem; font-weight: 750; }
+    .profile input { width: 100%; padding: 9px 10px; border: 1px solid var(--line); border-radius: 4px; background: var(--white); color: var(--ink); }
+
+    @media (max-width: 700px) {
+      .page { padding: 18px 16px 38px; }
+      .topline-note { text-align: right; }
+      .intro { grid-template-columns: 1fr; gap: 19px; padding: 28px 0 22px; }
+      .score-panel { max-width: 100%; }
+      .about { grid-template-columns: 1fr; gap: 18px; }
+      .population { padding: 0; border: 0; }
+      .section-heading { align-items: start; flex-direction: column; }
+      .activities { grid-template-columns: 1fr; }
+      .summary { grid-template-columns: 1fr; }
+      .levels { grid-template-columns: repeat(2, 1fr); }
+      .profile { grid-template-columns: 1fr 1fr; }
+      .profile label:first-child { grid-column: 1 / -1; }
+    }
+    @media (max-width: 380px) {
+      .activity { padding: 12px; }
+      .activity-head { grid-template-columns: 42px 1fr; gap: 9px; }
+      .illustration { width: 42px; height: 42px; font-size: 1.45rem; }
+      .item-points { grid-column: 2; }
+      .levels { grid-template-columns: 1fr 1fr; }
+      .actions { width: 100%; }
+      .action-button { flex: 1; justify-content: center; }
+    }
+    @media print {
+      @page { margin: 14mm; }
+      body { background: #fff; print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+      .page { max-width: none; padding: 0; }
+      .actions { display: none; }
+      .activity { break-inside: avoid; animation: none; box-shadow: none; }
+      .activities { gap: 8px; }
+      .intro { padding-top: 20px; }
+      .profile input { border: 0; border-bottom: 1px solid #999; border-radius: 0; }
+    }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; } }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <div class="topline">
+      <span class="brand">Guía de valoración funcional</span>
+      <span class="topline-note">Actividades básicas de la vida diaria</span>
+    </div>
+
+    <header class="intro">
+      <div>
+        <p class="eyebrow">Índice de independencia funcional</p>
+        <h1>Escala de Barthel</h1>
+        <p class="intro-copy">Valora cuánta ayuda necesita una persona para realizar diez actividades cotidianas. Selecciona una opción por actividad según el desempeño habitual observado o referido.</p>
+      </div>
+      <aside class="score-panel" aria-live="polite" aria-atomic="true">
+        <div class="score-number"><span id="total">0</span><small> / 100</small></div>
+        <div><div class="score-label">Puntuación total</div><span class="score-status" id="completion">0 de 10 actividades</span></div>
+        <div class="meter" aria-hidden="true"><div class="meter-fill" id="meter-fill"></div></div>
+      </aside>
+    </header>
+
+    <section class="about" aria-label="Información sobre la escala">
+      <div>
+        <h2>¿Qué es?</h2>
+        <p>El índice de Barthel es una escala que estima el grado de <strong>independencia en actividades básicas de la vida diaria</strong>. La puntuación suma la ayuda requerida en cada tarea: cuanto más alta, mayor independencia.</p>
+      </div>
+      <div class="population">
+        <h2>¿A quién se aplica?</h2>
+        <p>Se utiliza principalmente en <strong>personas adultas</strong> con limitaciones funcionales, personas mayores y pacientes en rehabilitación o seguimiento clínico. Puede aplicarse mediante observación, entrevista a la persona o a quien la cuida; considera el desempeño habitual y el entorno.</p>
+      </div>
+    </section>
+
+    <section aria-labelledby="activities-title">
+      <div class="section-heading">
+        <div>
+          <h2 id="activities-title">Actividades valoradas</h2>
+          <p>Marca el nivel que mejor describa la ayuda que necesita la persona.</p>
+        </div>
+        <div class="actions">
+          <button class="action-button" type="button" id="reset-button" title="Borrar las selecciones">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 12a9 9 0 1 0 2.64-6.36L3 8"/><path d="M3 3v5h5"/><path d="M12 7v5l3 2"/></svg>
+            Reiniciar
+          </button>
+          <button class="action-button" type="button" id="print-button" title="Imprimir o guardar como PDF">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M7 8V3h10v5M7 17H5a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><path d="M7 14h10v7H7zM17 11h.01"/></svg>
+            Imprimir
+          </button>
+        </div>
+      </div>
+
+      <div class="profile" aria-label="Datos de la valoración">
+        <label>Nombre o identificador<input type="text" name="person" autocomplete="off"></label>
+        <label>Fecha<input type="date" name="date"></label>
+        <label>Profesional<input type="text" name="professional" autocomplete="off"></label>
+      </div>
+
+      <form id="barthel-form">
+        <div class="activities" id="activities"></div>
+      </form>
+    </section>
+
+    <section class="summary" aria-labelledby="interpretation-title">
+      <div>
+        <h2 id="interpretation-title">Nivel de dependencia</h2>
+        <p>Clasificación orientativa frecuente para una puntuación completa de 0 a 100:</p>
+        <div class="levels" id="levels">
+          <div class="level" data-min="0" data-max="20"><strong>Total</strong><span>0–20 puntos</span></div>
+          <div class="level" data-min="21" data-max="60"><strong>Grave</strong><span>21–60 puntos</span></div>
+          <div class="level" data-min="61" data-max="90"><strong>Moderada</strong><span>61–90 puntos</span></div>
+          <div class="level" data-min="91" data-max="99"><strong>Leve</strong><span>91–99 puntos</span></div>
+          <div class="level" data-min="100" data-max="100"><strong>Independencia</strong><span>100 puntos</span></div>
+        </div>
+        <p class="score-message" id="interpretation">Completa las diez actividades para obtener una interpretación orientativa.</p>
+      </div>
+      <div>
+        <h2>Lectura del resultado</h2>
+        <p>Una puntuación menor indica más necesidad de apoyo. El resultado describe el nivel funcional en las actividades incluidas; no identifica por sí solo la causa de la dependencia ni reemplaza una valoración clínica integral.</p>
+      </div>
+    </section>
+
+    <p class="footnote"><strong>Importante:</strong> existen adaptaciones y criterios de interpretación distintos del índice de Barthel. Esta hoja presenta una versión habitual de 10 ítems (máximo 100 puntos); confirma que los puntos de corte y las instrucciones correspondan a la versión validada y al protocolo de tu centro. No es una herramienta de autodiagnóstico.</p>
+  </main>
+
+  <script>
+    const activities = [
+      {
+        title: 'Alimentación', icon: '🥣', color: 'var(--yellow)', description: 'Comer los alimentos servidos; considera si requiere ayuda para cortar o preparar la comida.',
+        options: [[0, 'Dependiente para alimentarse.'], [5, 'Necesita ayuda para cortar, untar o abrir recipientes, pero come sin ayuda.'], [10, 'Independiente; puede usar cubiertos y comer por sí mismo.']]
+      },
+      {
+        title: 'Baño / ducha', icon: '🛁', color: 'var(--blue)', description: 'Lavarse el cuerpo en bañera o ducha, incluyendo entrar y salir con seguridad.',
+        options: [[0, 'Necesita ayuda en el baño.'], [5, 'Se baña o ducha sin ayuda.']]
+      },
+      {
+        title: 'Aseo personal', icon: '🪥', color: 'var(--coral)', description: 'Higiene de cara, cabello, dientes y afeitado.',
+        options: [[0, 'Necesita ayuda para el aseo personal.'], [5, 'Realiza el aseo personal sin ayuda.']]
+      },
+      {
+        title: 'Vestido', icon: '👕', color: 'var(--lilac)', description: 'Ponerse y quitarse la ropa y, cuando corresponda, usar cierres o calzado.',
+        options: [[0, 'Dependiente para vestirse.'], [5, 'Necesita ayuda, pero realiza al menos la mitad de la tarea sin ayuda.'], [10, 'Se viste y desviste sin ayuda.']]
+      },
+      {
+        title: 'Control de deposiciones', icon: '🧻', color: 'var(--green)', description: 'Continencia intestinal y manejo de ayudas si las utiliza.',
+        options: [[0, 'Incontinente o necesita que otra persona le administre un enema.'], [5, 'Accidente ocasional (menos de una vez por semana).'], [10, 'Continente; maneja por sí mismo cualquier ayuda indicada.']]
+      },
+      {
+        title: 'Control de orina', icon: '💧', color: 'var(--blue)', description: 'Continencia urinaria durante el día y la noche; incluye el manejo de sonda si corresponde.',
+        options: [[0, 'Incontinente o no puede manejar por sí mismo una sonda.'], [5, 'Accidente ocasional (máximo uno en 24 horas) o necesita ayuda con la sonda.'], [10, 'Continente; maneja por sí mismo una sonda u otro dispositivo.']]
+      },
+      {
+        title: 'Uso del retrete', icon: '🚻', color: 'var(--yellow)', description: 'Llegar al retrete, sentarse y levantarse, arreglarse la ropa y realizar la higiene.',
+        options: [[0, 'Dependiente para usar el retrete.'], [5, 'Necesita algo de ayuda, pero realiza parte de la tarea sin asistencia.'], [10, 'Independiente para entrar, usar el retrete, vestirse e higienizarse.']]
+      },
+      {
+        title: 'Traslado cama–silla', icon: '🪑', color: 'var(--coral)', description: 'Pasar de la cama a una silla y regresar, incluyendo el equilibrio al sentarse.',
+        options: [[0, 'No puede realizar el traslado o no mantiene el equilibrio sentado.'], [5, 'Necesita mucha ayuda de una o dos personas, pero puede sentarse.'], [10, 'Necesita poca ayuda física o supervisión.'], [15, 'Realiza el traslado sin ayuda.']]
+      },
+      {
+        title: 'Desplazamiento', icon: '🚶', color: 'var(--green)', description: 'Caminar en superficie llana al menos 50 metros; valora ayudas técnicas y asistencia.',
+        options: [[0, 'Inmóvil o no puede desplazarse.'], [5, 'Se desplaza en silla de ruedas de forma independiente, al menos 50 metros.'], [10, 'Camina al menos 50 metros con ayuda de una persona.'], [15, 'Camina al menos 50 metros sin ayuda; puede usar una ayuda técnica.']]
+      },
+      {
+        title: 'Subir y bajar escaleras', icon: '🪜', color: 'var(--lilac)', description: 'Subir y bajar un tramo de escaleras, con o sin ayuda técnica.',
+        options: [[0, 'No puede subir ni bajar escaleras.'], [5, 'Necesita ayuda o supervisión.'], [10, 'Sube y baja escaleras sin ayuda; puede usar barandilla o ayuda técnica.']]
+      }
+    ];
+
+    const activityContainer = document.getElementById('activities');
+    const form = document.getElementById('barthel-form');
+
+    activities.forEach((activity, activityIndex) => {
+      const card = document.createElement('article');
+      card.className = 'activity';
+      card.style.setProperty('--accent', activity.color);
+      card.style.setProperty('--order', activityIndex);
+
+      const heading = document.createElement('div');
+      heading.className = 'activity-head';
+      heading.innerHTML = `<span class="illustration" aria-hidden="true">${activity.icon}</span><div><h3>${activityIndex + 1}. ${activity.title}</h3><p class="activity-description">${activity.description}</p></div><span class="item-points">máx. ${Math.max(...activity.options.map(([score]) => score))} pt${Math.max(...activity.options.map(([score]) => score)) === 1 ? '' : 's'}</span>`;
+
+      const fieldset = document.createElement('fieldset');
+      fieldset.className = 'options';
+      fieldset.setAttribute('aria-label', activity.title);
+
+      activity.options.forEach(([score, text], optionIndex) => {
+        const option = document.createElement('div');
+        option.className = 'option';
+        const id = `activity-${activityIndex}-option-${optionIndex}`;
+        option.innerHTML = `<input type="radio" id="${id}" name="activity-${activityIndex}" value="${score}"><label for="${id}"><span class="radio-mark" aria-hidden="true"></span><span class="option-text">${text}</span><span class="option-score">${score}</span></label>`;
+        fieldset.append(option);
+      });
+
+      card.append(heading, fieldset);
+      activityContainer.append(card);
+    });
+
+    function updateScore() {
+      const answers = activities.map((_, index) => form.querySelector(`input[name="activity-${index}"]:checked`));
+      const answered = answers.filter(Boolean).length;
+      const total = answers.reduce((sum, answer) => sum + (answer ? Number(answer.value) : 0), 0);
+      document.getElementById('total').textContent = total;
+      document.getElementById('completion').textContent = `${answered} de 10 actividades`;
+      document.getElementById('meter-fill').style.width = `${answered * 10}%`;
+
+      const message = document.getElementById('interpretation');
+      document.querySelectorAll('.level').forEach(level => level.classList.remove('active'));
+      if (answered < 10) {
+        message.textContent = `Faltan ${10 - answered} actividades por valorar para interpretar el total.`;
+        return;
+      }
+
+      const level = [...document.querySelectorAll('.level')].find(item => total >= Number(item.dataset.min) && total <= Number(item.dataset.max));
+      level?.classList.add('active');
+      const labels = { Total: 'dependencia total', Grave: 'dependencia grave', Moderada: 'dependencia moderada', Leve: 'dependencia leve', Independencia: 'independencia' };
+      message.textContent = `Resultado orientativo: ${labels[level.querySelector('strong').textContent]} (${total}/100).`;
+    }
+
+    form.addEventListener('change', updateScore);
+    document.getElementById('reset-button').addEventListener('click', () => {
+      form.reset();
+      document.querySelectorAll('.profile input').forEach(input => { input.value = ''; });
+      updateScore();
+    });
+    document.getElementById('print-button').addEventListener('click', () => window.print());
+    updateScore();
+  </script>
+</body>
+</html>
