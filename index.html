@@ -3,31 +3,38 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#f7f5ee">
+  <meta name="theme-color" content="#f8f1d9">
   <title>Escala de Barthel | Actividades básicas de la vida diaria</title>
   <style>
     :root {
       color-scheme: light;
-      --ink: #263b36;
-      --muted: #64736e;
-      --paper: #fbfaf6;
-      --line: #e3e7dc;
-      --green: #dcebe2;
-      --coral: #f5ddd2;
-      --yellow: #f3e9bf;
-      --blue: #dce9ef;
-      --lilac: #e9e1ee;
-      --white: #fffefa;
+      --ink: #243b3a;
+      --muted: #667a76;
+      --paper: #f8f5ef;
+      --paper-strong: #fffdf7;
+      --line: #e7e1d4;
+      --green: #dfeee5;
+      --coral: #fbe0d7;
+      --yellow: #fbeebd;
+      --blue: #dfeefa;
+      --lilac: #ecdef7;
+      --peach: #f7d9c7;
+      --rose: #f9dfe7;
+      --mint: #dff6ef;
+      --white: #ffffff;
+      --shadow: 0 18px 40px rgba(36, 59, 58, 0.10);
       --serif: Georgia, 'Times New Roman', serif;
       --sans: 'Avenir Next', Avenir, 'Segoe UI', sans-serif;
     }
 
     * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
     body {
       margin: 0;
-      background-color: var(--paper);
-      background-image: radial-gradient(#d9e3d9 0.7px, transparent 0.7px);
-      background-size: 18px 18px;
+      background:
+        radial-gradient(circle at top left, rgba(253, 240, 184, 0.55), transparent 30%),
+        radial-gradient(circle at bottom right, rgba(208, 232, 255, 0.55), transparent 35%),
+        var(--paper);
       color: var(--ink);
       font-family: var(--sans);
       line-height: 1.55;
@@ -35,74 +42,420 @@
     button, input { font: inherit; }
     button { color: inherit; }
 
-    .page { max-width: 1120px; margin: 0 auto; padding: 30px 28px 56px; }
-    .topline { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-bottom: 14px; border-bottom: 1px solid var(--line); }
-    .brand { font-size: .78rem; font-weight: 750; letter-spacing: .06em; text-transform: uppercase; }
-    .topline-note { color: var(--muted); font-size: .82rem; }
-    .intro { display: grid; grid-template-columns: minmax(0, 1fr) 250px; gap: 36px; align-items: end; padding: 38px 0 28px; }
-    .eyebrow { margin: 0 0 8px; color: #56766b; font-size: .75rem; font-weight: 800; letter-spacing: .09em; text-transform: uppercase; }
-    h1 { max-width: 720px; margin: 0; font: 500 clamp(2.5rem, 5vw, 4rem)/1.02 var(--serif); letter-spacing: 0; }
-    .intro-copy { max-width: 700px; margin: 15px 0 0; color: #53655f; font-size: 1rem; }
-    .score-panel { display: grid; grid-template-columns: auto 1fr; align-items: center; gap: 12px; padding: 15px 17px; background: var(--green); border-radius: 7px; }
-    .score-number { min-width: 77px; font: 500 2.6rem/.95 var(--serif); font-variant-numeric: tabular-nums; }
-    .score-number small { font: 600 .86rem var(--sans); }
-    .score-label { font-size: .79rem; font-weight: 750; }
-    .score-status { display: block; margin-top: 3px; color: #4c655c; font-size: .76rem; }
-    .meter { grid-column: 1 / -1; height: 5px; overflow: hidden; background: #ffffffa8; border-radius: 99px; }
-    .meter-fill { width: 0; height: 100%; background: #557c6d; transition: width .25s ease; }
+    .page {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 28px 24px 56px;
+    }
 
-    .about { display: grid; grid-template-columns: 1fr 1fr; gap: 26px; padding: 20px 0 22px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
-    .about h2, .section-heading h2 { margin: 0; font: 500 1.42rem var(--serif); }
-    .about p { margin: 6px 0 0; color: var(--muted); font-size: .89rem; }
+    .topline {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 0 0 14px;
+      border-bottom: 1px solid var(--line);
+    }
+    .brand {
+      font-size: .78rem;
+      font-weight: 850;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: #5b6b66;
+    }
+    .topline-note {
+      color: var(--muted);
+      font-size: .82rem;
+      font-weight: 600;
+    }
+
+    .intro {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 280px;
+      gap: 30px;
+      align-items: center;
+      padding: 36px 0 24px;
+    }
+    .eyebrow {
+      margin: 0 0 8px;
+      color: #5a7d72;
+      font-size: .76rem;
+      font-weight: 800;
+      letter-spacing: .09em;
+      text-transform: uppercase;
+    }
+    h1 {
+      max-width: 700px;
+      margin: 0;
+      font: 600 clamp(2.5rem, 5vw, 4.2rem)/1.02 var(--serif);
+      letter-spacing: -0.04em;
+      color: #18332f;
+    }
+    .intro-copy {
+      max-width: 700px;
+      margin: 18px 0 0;
+      color: #556b66;
+      font-size: 1.02rem;
+    }
+
+    .score-panel {
+      position: relative;
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      align-items: center;
+      gap: 12px;
+      padding: 18px 18px 16px;
+      background: linear-gradient(135deg, var(--mint), var(--yellow));
+      border: 1px solid rgba(36, 59, 58, 0.08);
+      border-radius: 22px;
+      box-shadow: var(--shadow);
+    }
+    .score-panel::after {
+      content: "";
+      position: absolute;
+      inset: auto -24px -28px auto;
+      width: 115px;
+      height: 115px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.22);
+    }
+    .score-number {
+      position: relative;
+      z-index: 1;
+      min-width: 86px;
+      font: 600 2.6rem/.95 var(--serif);
+      font-variant-numeric: tabular-nums;
+      color: #18332f;
+    }
+    .score-number small {
+      font: 700 .88rem var(--sans);
+      color: #4e6a64;
+    }
+    .score-label {
+      position: relative;
+      z-index: 1;
+      font-size: .78rem;
+      font-weight: 800;
+      letter-spacing: .05em;
+      text-transform: uppercase;
+      color: #466861;
+    }
+    .score-status {
+      position: relative;
+      z-index: 1;
+      display: block;
+      margin-top: 4px;
+      color: #496a64;
+      font-size: .76rem;
+      font-weight: 700;
+    }
+    .meter {
+      position: relative;
+      z-index: 1;
+      grid-column: 1 / -1;
+      height: 7px;
+      overflow: hidden;
+      background: rgba(255,255,255,0.52);
+      border-radius: 99px;
+    }
+    .meter-fill {
+      width: 0;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, #5f8d7d, #8bb9a4);
+      transition: width .25s ease;
+    }
+
+    .about {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      padding: 20px 0 22px;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+    .about h2, .section-heading h2 {
+      margin: 0;
+      font: 600 1.43rem var(--serif);
+      color: #193632;
+    }
+    .about p { margin: 8px 0 0; color: var(--muted); font-size: .9rem; }
     .about strong { color: var(--ink); }
-    .population { padding-left: 22px; border-left: 1px solid var(--line); }
+    .population { padding-left: 20px; border-left: 1px solid var(--line); }
 
-    .section-heading { display: flex; justify-content: space-between; align-items: end; gap: 18px; margin: 30px 0 14px; }
-    .section-heading p { margin: 5px 0 0; color: var(--muted); font-size: .85rem; }
-    .actions { display: flex; gap: 8px; }
-    .action-button { display: inline-flex; align-items: center; gap: 7px; min-height: 40px; padding: 8px 12px; border: 1px solid #d6dfd6; border-radius: 5px; background: var(--white); cursor: pointer; font-size: .8rem; font-weight: 700; }
-    .action-button:hover { background: #edf3ec; }
-    .action-button:focus-visible, input:focus-visible + label { outline: 3px solid #719483; outline-offset: 2px; }
+    .section-heading {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 18px;
+      margin: 28px 0 16px;
+    }
+    .section-heading p {
+      margin: 5px 0 0;
+      color: var(--muted);
+      font-size: .84rem;
+    }
+    .actions { display: flex; gap: 10px; flex-wrap: wrap; }
+    .action-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      min-height: 40px;
+      padding: 8px 14px;
+      border: 1px solid rgba(36, 59, 58, 0.10);
+      border-radius: 12px;
+      background: rgba(255,255,255,0.72);
+      cursor: pointer;
+      box-shadow: 0 8px 18px rgba(36,59,58,0.04);
+      transition: transform .18s ease, background .18s ease;
+    }
+    .action-button:hover {
+      transform: translateY(-1px);
+      background: #f4f6f2;
+    }
+    .action-button:focus-visible, input:focus-visible + label { outline: 3px solid rgba(95,141,125,0.42); outline-offset: 2px; }
     .action-button svg { width: 16px; height: 16px; }
-    .activities { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
-    .activity { min-width: 0; padding: 16px; border: 1px solid var(--line); border-top: 3px solid var(--accent); border-radius: 6px; background: var(--white); animation: arrive .45s both; animation-delay: calc(var(--order) * 35ms); }
-    @keyframes arrive { from { opacity: 0; transform: translateY(7px); } to { opacity: 1; transform: translateY(0); } }
-    .activity-head { display: grid; grid-template-columns: 48px 1fr auto; gap: 12px; align-items: center; }
-    .illustration { display: grid; width: 48px; height: 48px; place-items: center; border-radius: 50%; background: var(--accent); font-size: 1.65rem; }
-    .activity h3 { margin: 0; font-size: .96rem; line-height: 1.2; }
-    .activity-description { margin: 4px 0 0; color: var(--muted); font-size: .77rem; }
-    .item-points { color: #60756c; font-size: .72rem; font-weight: 750; white-space: nowrap; }
-    .options { display: grid; gap: 5px; margin: 14px 0 0; padding: 0; border: 0; }
-    .option { position: relative; }
-    .option input { position: absolute; width: 1px; height: 1px; opacity: 0; }
-    .option label { display: grid; grid-template-columns: 20px minmax(0, 1fr) auto; gap: 9px; align-items: start; padding: 8px 9px; border: 1px solid transparent; border-radius: 4px; cursor: pointer; }
-    .option label:hover { background: #f5f6f0; }
-    .option input:checked + label { border-color: #abc4b3; background: #edf4ee; }
-    .radio-mark { display: grid; width: 17px; height: 17px; margin-top: 1px; place-items: center; border: 1.5px solid #99a9a0; border-radius: 50%; }
-    .option input:checked + label .radio-mark { border-color: #557c6d; }
-    .option input:checked + label .radio-mark::after { width: 8px; height: 8px; border-radius: 50%; background: #557c6d; content: ''; }
-    .option-text { color: #495a54; font-size: .78rem; line-height: 1.4; }
-    .option-score { padding-left: 4px; color: var(--ink); font-size: .8rem; font-weight: 800; white-space: nowrap; }
 
-    .summary { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; margin-top: 22px; padding: 19px 21px; border-radius: 6px; background: #f0eee4; }
-    .summary h2 { margin: 0 0 5px; font: 500 1.2rem var(--serif); }
-    .summary p { margin: 0; color: #5c6962; font-size: .82rem; }
-    .levels { display: grid; grid-template-columns: repeat(5, 1fr); gap: 5px; margin-top: 11px; }
-    .level { padding: 8px 7px; border-radius: 4px; background: #fffefa; }
+    .profile {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr;
+      gap: 12px;
+      margin-top: 18px;
+    }
+    .profile label {
+      display: grid;
+      gap: 6px;
+      color: #526d68;
+      font-size: .74rem;
+      font-weight: 800;
+      letter-spacing: .02em;
+    }
+    .profile input {
+      width: 100%;
+      padding: 11px 12px;
+      border: 1px solid rgba(36,59,58,0.12);
+      border-radius: 12px;
+      background: rgba(255,255,255,0.74);
+      color: var(--ink);
+      box-shadow: inset 0 1px 2px rgba(36,59,58,0.03);
+    }
+
+    .activities {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+      margin-top: 18px;
+    }
+    .activity {
+      position: relative;
+      overflow: hidden;
+      min-width: 0;
+      border: 1px solid rgba(36,59,58,0.09);
+      border-radius: 22px;
+      background: rgba(255,255,255,0.85);
+      box-shadow: 0 10px 26px rgba(36,59,58,0.05);
+      animation: arrive .42s both;
+      animation-delay: calc(var(--order) * 40ms);
+    }
+    @keyframes arrive { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+    .activity-media {
+      position: relative;
+      height: 138px;
+      background-size: cover;
+      background-position: center;
+      border-bottom: 1px solid rgba(36,59,58,0.08);
+    }
+    .activity-media::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(255,255,255,0.20), rgba(17,26,24,0.20));
+    }
+    .media-badge {
+      position: absolute;
+      right: 12px;
+      top: 12px;
+      z-index: 1;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 26px;
+      padding: 5px 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.8);
+      border: 1px solid rgba(36,59,58,0.08);
+      color: #2d4b48;
+      font-size: .66rem;
+      font-weight: 800;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+
+    .activity-body { padding: 16px 16px 18px; }
+    .activity-head {
+      display: grid;
+      grid-template-columns: 52px minmax(0, 1fr) auto;
+      gap: 12px;
+      align-items: center;
+    }
+    .illustration {
+      display: grid;
+      width: 52px;
+      height: 52px;
+      place-items: center;
+      border-radius: 16px;
+      background: var(--accent);
+      border: 1px solid rgba(36,59,58,0.05);
+      font-size: 1.7rem;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.4);
+    }
+    .activity h3 {
+      margin: 0;
+      font-size: 1rem;
+      line-height: 1.2;
+      color: #163330;
+    }
+    .activity-description {
+      margin: 7px 0 0;
+      color: var(--muted);
+      font-size: .78rem;
+      line-height: 1.55;
+    }
+    .item-points {
+      color: #506b67;
+      font-size: .7rem;
+      font-weight: 800;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .options {
+      display: grid;
+      gap: 6px;
+      margin: 14px 0 0;
+      padding: 0;
+      border: 0;
+    }
+    .option { position: relative; }
+    .option input {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      opacity: 0;
+    }
+    .option label {
+      display: grid;
+      grid-template-columns: 20px minmax(0, 1fr) auto;
+      gap: 9px;
+      align-items: start;
+      padding: 9px 10px;
+      border: 1px solid transparent;
+      border-radius: 12px;
+      cursor: pointer;
+      background: rgba(246, 248, 245, 0.72);
+      transition: background .18s ease, border-color .18s ease, transform .18s ease;
+    }
+    .option label:hover {
+      border-color: rgba(36,59,58,0.10);
+      background: #f1f6f2;
+      transform: translateX(1px);
+    }
+    .option input:checked + label {
+      border-color: rgba(95,141,125,0.35);
+      background: #eef8f2;
+    }
+    .radio-mark {
+      display: grid;
+      width: 17px;
+      height: 17px;
+      margin-top: 1px;
+      place-items: center;
+      border: 1.7px solid #9cafa5;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.8);
+    }
+    .option input:checked + label .radio-mark {
+      border-color: #5f8d7d;
+    }
+    .option input:checked + label .radio-mark::after {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #5f8d7d;
+      content: '';
+    }
+    .option-text {
+      color: #485f5a;
+      font-size: .78rem;
+      line-height: 1.45;
+    }
+    .option-score {
+      padding-left: 4px;
+      color: #1c3634;
+      font-size: .8rem;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .summary {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 26px;
+      margin-top: 26px;
+      padding: 22px 20px;
+      border-radius: 22px;
+      background: linear-gradient(135deg, rgba(255,255,255,0.8), rgba(241,234,218,0.8));
+      border: 1px solid rgba(36,59,58,0.07);
+      box-shadow: 0 10px 30px rgba(36,59,58,0.03);
+    }
+    .summary h2 {
+      margin: 0 0 8px;
+      font: 600 1.3rem var(--serif);
+      color: #1a342f;
+    }
+    .summary p { margin: 0; color: #5d6e6a; font-size: .82rem; }
+    .levels {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 7px;
+      margin-top: 12px;
+    }
+    .level {
+      padding: 10px 8px;
+      border-radius: 12px;
+      background: rgba(255,255,255,0.8);
+      border: 1px solid rgba(36,59,58,0.06);
+      text-align: left;
+    }
     .level strong, .level span { display: block; }
     .level strong { font-size: .77rem; }
-    .level span { margin-top: 2px; color: var(--muted); font-size: .69rem; }
-    .level.active { outline: 2px solid #648a78; outline-offset: 1px; }
-    .score-message { margin-top: 8px !important; font-weight: 750; color: var(--ink) !important; }
-    .footnote { margin-top: 20px; padding-top: 12px; border-top: 1px solid var(--line); color: var(--muted); font-size: .75rem; }
-    .profile { display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 12px; margin-top: 22px; }
-    .profile label { display: grid; gap: 5px; color: #53655f; font-size: .74rem; font-weight: 750; }
-    .profile input { width: 100%; padding: 9px 10px; border: 1px solid var(--line); border-radius: 4px; background: var(--white); color: var(--ink); }
+    .level span { margin-top: 2px; color: var(--muted); font-size: .68rem; }
+    .level.active {
+      outline: 2px solid rgba(95,141,125,0.75);
+      outline-offset: 1px;
+      background: rgba(223,238,229,0.8);
+    }
+    .score-message {
+      margin-top: 12px !important;
+      font-weight: 800 !important;
+      color: #1b3834 !important;
+    }
+
+    .footnote {
+      margin-top: 20px;
+      padding-top: 12px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: .75rem;
+    }
 
     @media (max-width: 700px) {
       .page { padding: 18px 16px 38px; }
       .topline-note { text-align: right; }
-      .intro { grid-template-columns: 1fr; gap: 19px; padding: 28px 0 22px; }
+      .intro { grid-template-columns: 1fr; gap: 20px; padding: 26px 0 18px; }
       .score-panel { max-width: 100%; }
       .about { grid-template-columns: 1fr; gap: 18px; }
       .population { padding: 0; border: 0; }
@@ -114,7 +467,7 @@
       .profile label:first-child { grid-column: 1 / -1; }
     }
     @media (max-width: 380px) {
-      .activity { padding: 12px; }
+      .activity-body { padding: 14px 12px 16px; }
       .activity-head { grid-template-columns: 42px 1fr; gap: 9px; }
       .illustration { width: 42px; height: 42px; font-size: 1.45rem; }
       .item-points { grid-column: 2; }
@@ -129,7 +482,6 @@
       .actions { display: none; }
       .activity { break-inside: avoid; animation: none; box-shadow: none; }
       .activities { gap: 8px; }
-      .intro { padding-top: 20px; }
       .profile input { border: 0; border-bottom: 1px solid #999; border-radius: 0; }
     }
     @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; } }
@@ -146,11 +498,14 @@
       <div>
         <p class="eyebrow">Índice de independencia funcional</p>
         <h1>Escala de Barthel</h1>
-        <p class="intro-copy">Valora cuánta ayuda necesita una persona para realizar diez actividades cotidianas. Selecciona una opción por actividad según el desempeño habitual observado o referido.</p>
+        <p class="intro-copy">Valora cuánta ayuda necesita una persona para realizar diez actividades cotidianas. Selecciona la opción que mejor describa su desempeño habitual en cada tarea.</p>
       </div>
       <aside class="score-panel" aria-live="polite" aria-atomic="true">
         <div class="score-number"><span id="total">0</span><small> / 100</small></div>
-        <div><div class="score-label">Puntuación total</div><span class="score-status" id="completion">0 de 10 actividades</span></div>
+        <div>
+          <div class="score-label">Puntuación total</div>
+          <span class="score-status" id="completion">0 de 10 actividades</span>
+        </div>
         <div class="meter" aria-hidden="true"><div class="meter-fill" id="meter-fill"></div></div>
       </aside>
     </header>
@@ -158,11 +513,11 @@
     <section class="about" aria-label="Información sobre la escala">
       <div>
         <h2>¿Qué es?</h2>
-        <p>El índice de Barthel es una escala que estima el grado de <strong>independencia en actividades básicas de la vida diaria</strong>. La puntuación suma la ayuda requerida en cada tarea: cuanto más alta, mayor independencia.</p>
+        <p>El índice de Barthel estima el grado de <strong>independencia en actividades básicas de la vida diaria</strong>. La puntuación refleja la ayuda requerida en cada tarea y aporta una aproximación útil para la valoración funcional.</p>
       </div>
       <div class="population">
         <h2>¿A quién se aplica?</h2>
-        <p>Se utiliza principalmente en <strong>personas adultas</strong> con limitaciones funcionales, personas mayores y pacientes en rehabilitación o seguimiento clínico. Puede aplicarse mediante observación, entrevista a la persona o a quien la cuida; considera el desempeño habitual y el entorno.</p>
+        <p>Se utiliza principalmente en <strong>personas adultas</strong> con limitaciones funcionales, pacientes mayores y personas en rehabilitación o seguimiento clínico. Puede aplicarse mediante la observación directa o la información proporcionada por la persona y su entorno.</p>
       </div>
     </section>
 
@@ -178,7 +533,7 @@
             Reiniciar
           </button>
           <button class="action-button" type="button" id="print-button" title="Imprimir o guardar como PDF">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M7 8V3h10v5M7 17H5a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><path d="M7 14h10v7H7zM17 11h.01"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M7 8V3h10v5M7 17H5a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2H7zm0 0h10"/></svg>
             Imprimir
           </button>
         </div>
@@ -210,53 +565,93 @@
       </div>
       <div>
         <h2>Lectura del resultado</h2>
-        <p>Una puntuación menor indica más necesidad de apoyo. El resultado describe el nivel funcional en las actividades incluidas; no identifica por sí solo la causa de la dependencia ni reemplaza una valoración clínica integral.</p>
+        <p>Una puntuación menor indica más necesidad de apoyo. El resultado describe el nivel funcional en las actividades incluidas; no identifica por sí solo la causa de la dependencia ni reemplaza la valoración clínica integral.</p>
       </div>
     </section>
 
-    <p class="footnote"><strong>Importante:</strong> existen adaptaciones y criterios de interpretación distintos del índice de Barthel. Esta hoja presenta una versión habitual de 10 ítems (máximo 100 puntos); confirma que los puntos de corte y las instrucciones correspondan a la versión validada y al protocolo de tu centro. No es una herramienta de autodiagnóstico.</p>
+    <p class="footnote"><strong>Importante:</strong> existen adaptaciones y criterios de interpretación distintos del índice de Barthel. Esta hoja presenta una versión habitual de 10 ítems para uso educativo o de apoyo a la valoración.</p>
   </main>
 
   <script>
     const activities = [
       {
-        title: 'Alimentación', icon: '🥣', color: 'var(--yellow)', description: 'Comer los alimentos servidos; considera si requiere ayuda para cortar o preparar la comida.',
+        title: 'Alimentación',
+        icon: '🥣',
+        color: 'var(--yellow)',
+        image: 'https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=1200&q=80',
+        description: 'Comer los alimentos servidos; considera si requiere ayuda para cortar, untar o abrir recipientes.',
         options: [[0, 'Dependiente para alimentarse.'], [5, 'Necesita ayuda para cortar, untar o abrir recipientes, pero come sin ayuda.'], [10, 'Independiente; puede usar cubiertos y comer por sí mismo.']]
       },
       {
-        title: 'Baño / ducha', icon: '🛁', color: 'var(--blue)', description: 'Lavarse el cuerpo en bañera o ducha, incluyendo entrar y salir con seguridad.',
+        title: 'Baño / ducha',
+        icon: '🛁',
+        color: 'var(--blue)',
+        image: 'https://images.unsplash.com/photo-1515377905703-c4788e51af15?auto=format&fit=crop&w=1200&q=80',
+        description: 'Lavarse el cuerpo en bañera o ducha, incluyendo entrar y salir con seguridad.',
         options: [[0, 'Necesita ayuda en el baño.'], [5, 'Se baña o ducha sin ayuda.']]
       },
       {
-        title: 'Aseo personal', icon: '🪥', color: 'var(--coral)', description: 'Higiene de cara, cabello, dientes y afeitado.',
+        title: 'Aseo personal',
+        icon: '🪥',
+        color: 'var(--coral)',
+        image: 'https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?auto=format&fit=crop&w=1200&q=80',
+        description: 'Higiene de cara, cabello, dientes y afeitado.',
         options: [[0, 'Necesita ayuda para el aseo personal.'], [5, 'Realiza el aseo personal sin ayuda.']]
       },
       {
-        title: 'Vestido', icon: '👕', color: 'var(--lilac)', description: 'Ponerse y quitarse la ropa y, cuando corresponda, usar cierres o calzado.',
+        title: 'Vestido',
+        icon: '👕',
+        color: 'var(--lilac)',
+        image: 'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=1200&q=80',
+        description: 'Ponerse y quitarse la ropa y, cuando corresponda, usar cierres o calzado.',
         options: [[0, 'Dependiente para vestirse.'], [5, 'Necesita ayuda, pero realiza al menos la mitad de la tarea sin ayuda.'], [10, 'Se viste y desviste sin ayuda.']]
       },
       {
-        title: 'Control de deposiciones', icon: '🧻', color: 'var(--green)', description: 'Continencia intestinal y manejo de ayudas si las utiliza.',
-        options: [[0, 'Incontinente o necesita que otra persona le administre un enema.'], [5, 'Accidente ocasional (menos de una vez por semana).'], [10, 'Continente; maneja por sí mismo cualquier ayuda indicada.']]
+        title: 'Control de deposiciones',
+        icon: '🧻',
+        color: 'var(--green)',
+        image: 'https://images.unsplash.com/photo-1584515933487-779824d29309?auto=format&fit=crop&w=1200&q=80',
+        description: 'Continencia intestinal y manejo de ayudas si las utiliza.',
+        options: [[0, 'Incontinente o necesita que otra persona le administre un enema.'], [5, 'Accidente ocasional (menos de una vez por semana).'], [10, 'Continente; maneja por sí mismo cualquier ayuda.']]
       },
       {
-        title: 'Control de orina', icon: '💧', color: 'var(--blue)', description: 'Continencia urinaria durante el día y la noche; incluye el manejo de sonda si corresponde.',
-        options: [[0, 'Incontinente o no puede manejar por sí mismo una sonda.'], [5, 'Accidente ocasional (máximo uno en 24 horas) o necesita ayuda con la sonda.'], [10, 'Continente; maneja por sí mismo una sonda u otro dispositivo.']]
+        title: 'Control de orina',
+        icon: '💧',
+        color: 'var(--blue)',
+        image: 'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=1200&q=80',
+        description: 'Continencia urinaria durante el día y la noche; incluye el manejo de sonda si corresponde.',
+        options: [[0, 'Incontinente o no puede manejar por sí mismo una sonda.'], [5, 'Accidente ocasional (máximo uno en 24 horas) o necesita ayuda con la sonda.'], [10, 'Continente; maneja por sí mismo la micción.']]
       },
       {
-        title: 'Uso del retrete', icon: '🚻', color: 'var(--yellow)', description: 'Llegar al retrete, sentarse y levantarse, arreglarse la ropa y realizar la higiene.',
-        options: [[0, 'Dependiente para usar el retrete.'], [5, 'Necesita algo de ayuda, pero realiza parte de la tarea sin asistencia.'], [10, 'Independiente para entrar, usar el retrete, vestirse e higienizarse.']]
+        title: 'Uso del retrete',
+        icon: '🚻',
+        color: 'var(--rose)',
+        image: 'https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&w=1200&q=80',
+        description: 'Llegar al retrete, sentarse y levantarse, arreglarse la ropa y realizar la higiene.',
+        options: [[0, 'Dependiente para usar el retrete.'], [5, 'Necesita algo de ayuda, pero realiza parte de la tarea sin asistencia.'], [10, 'Independiente para entrar, usar el retrete, vestirse e irse.']]
       },
       {
-        title: 'Traslado cama–silla', icon: '🪑', color: 'var(--coral)', description: 'Pasar de la cama a una silla y regresar, incluyendo el equilibrio al sentarse.',
-        options: [[0, 'No puede realizar el traslado o no mantiene el equilibrio sentado.'], [5, 'Necesita mucha ayuda de una o dos personas, pero puede sentarse.'], [10, 'Necesita poca ayuda física o supervisión.'], [15, 'Realiza el traslado sin ayuda.']]
+        title: 'Traslado cama–silla',
+        icon: '🪑',
+        color: 'var(--peach)',
+        image: 'https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&w=1200&q=80',
+        description: 'Pasar de la cama a una silla y regresar, incluyendo el equilibrio al sentarse.',
+        options: [[0, 'No puede realizar el traslado o no mantiene el equilibrio sentado.'], [5, 'Necesita mucha ayuda de una o dos personas, pero puede sentarse.'], [10, 'Necesita poca ayuda física o ninguna para trasladarse.']]
       },
       {
-        title: 'Desplazamiento', icon: '🚶', color: 'var(--green)', description: 'Caminar en superficie llana al menos 50 metros; valora ayudas técnicas y asistencia.',
-        options: [[0, 'Inmóvil o no puede desplazarse.'], [5, 'Se desplaza en silla de ruedas de forma independiente, al menos 50 metros.'], [10, 'Camina al menos 50 metros con ayuda de una persona.'], [15, 'Camina al menos 50 metros sin ayuda; puede usar una ayuda técnica.']]
+        title: 'Desplazamiento',
+        icon: '🚶',
+        color: 'var(--green)',
+        image: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=1200&q=80',
+        description: 'Caminar en superficie llana al menos 50 metros; valora ayudas técnicas y asistencia.',
+        options: [[0, 'Inmóvil o no puede desplazarse.'], [5, 'Se desplaza en silla de ruedas de forma independiente, al menos 50 metros.'], [10, 'Camina al menos 50 metros con ayuda de una persona.']]
       },
       {
-        title: 'Subir y bajar escaleras', icon: '🪜', color: 'var(--lilac)', description: 'Subir y bajar un tramo de escaleras, con o sin ayuda técnica.',
+        title: 'Subir y bajar escaleras',
+        icon: '🪜',
+        color: 'var(--lilac)',
+        image: 'https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1200&q=80',
+        description: 'Subir y bajar un tramo de escaleras, con o sin ayuda técnica.',
         options: [[0, 'No puede subir ni bajar escaleras.'], [5, 'Necesita ayuda o supervisión.'], [10, 'Sube y baja escaleras sin ayuda; puede usar barandilla o ayuda técnica.']]
       }
     ];
@@ -270,9 +665,20 @@
       card.style.setProperty('--accent', activity.color);
       card.style.setProperty('--order', activityIndex);
 
+      const media = document.createElement('div');
+      media.className = 'activity-media';
+      media.style.backgroundImage = `linear-gradient(180deg, rgba(255,255,255,0.08), rgba(20,25,24,0.25)), url("${activity.image}")`;
+      const badge = document.createElement('span');
+      badge.className = 'media-badge';
+      badge.textContent = `Item ${activityIndex + 1}`;
+      media.appendChild(badge);
+
+      const body = document.createElement('div');
+      body.className = 'activity-body';
+
       const heading = document.createElement('div');
       heading.className = 'activity-head';
-      heading.innerHTML = `<span class="illustration" aria-hidden="true">${activity.icon}</span><div><h3>${activityIndex + 1}. ${activity.title}</h3><p class="activity-description">${activity.description}</p></div><span class="item-points">máx. ${Math.max(...activity.options.map(([score]) => score))} pt${Math.max(...activity.options.map(([score]) => score)) === 1 ? '' : 's'}</span>`;
+      heading.innerHTML = `<span class="illustration" aria-hidden="true">${activity.icon}</span><div><h3>${activityIndex + 1}. ${activity.title}</h3><p class="activity-description">${activity.description}</p></div><span class="item-points">Puntos</span>`;
 
       const fieldset = document.createElement('fieldset');
       fieldset.className = 'options';
@@ -282,12 +688,20 @@
         const option = document.createElement('div');
         option.className = 'option';
         const id = `activity-${activityIndex}-option-${optionIndex}`;
-        option.innerHTML = `<input type="radio" id="${id}" name="activity-${activityIndex}" value="${score}"><label for="${id}"><span class="radio-mark" aria-hidden="true"></span><span class="option-text">${text}</span><span class="option-score">${score}</span></label>`;
-        fieldset.append(option);
+        option.innerHTML = `
+          <input type="radio" id="${id}" name="activity-${activityIndex}" value="${score}">
+          <label for="${id}">
+            <span class="radio-mark" aria-hidden="true"></span>
+            <span class="option-text">${text}</span>
+            <span class="option-score">${score}</span>
+          </label>
+        `;
+        fieldset.appendChild(option);
       });
 
-      card.append(heading, fieldset);
-      activityContainer.append(card);
+      body.append(heading, fieldset);
+      card.append(media, body);
+      activityContainer.appendChild(card);
     });
 
     function updateScore() {
@@ -306,7 +720,12 @@
       }
 
       const level = [...document.querySelectorAll('.level')].find(item => total >= Number(item.dataset.min) && total <= Number(item.dataset.max));
-      level?.classList.add('active');
+      if (!level) {
+        message.textContent = 'Resultado no disponible. Revisa los valores seleccionados.';
+        return;
+      }
+
+      level.classList.add('active');
       const labels = { Total: 'dependencia total', Grave: 'dependencia grave', Moderada: 'dependencia moderada', Leve: 'dependencia leve', Independencia: 'independencia' };
       message.textContent = `Resultado orientativo: ${labels[level.querySelector('strong').textContent]} (${total}/100).`;
     }
